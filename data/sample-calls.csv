@@ -1,0 +1,9 @@
+CallId,DurationMinutes,Type
+C-100,2,Local
+C-101,4,International
+C-102,1,Local
+C-103,0,Local
+C-104,10,International
+C-105,301,Local
+C-106,abc,Local
+,3,Local

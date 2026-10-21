@@ -1,0 +1,6 @@
+CallId,DurationMinutes,Type
+OK-1,2,Local
+BROKEN,not-a-number,Local
+MISSING-ID,3,International
+,2,Local
+BAD-CATEGORY,5,National
