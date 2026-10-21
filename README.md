@@ -1,10 +1,6 @@
 # AidynYeskendirov_IFP4 — Call Cost Quote Pipeline
 
-**Course:** Introduction to Functional Programming (IFP)  
-**Assignment:** 4 — Composing Functions Using Pipelining  
-**Target framework:** .NET 8 (`net8.0`)  
-**Submission type:** Individual work  
-**Student / group:** Aidyn Yeskendirov — Individual (solo submission)
+**Student / group:** Aidyn Yeskendirov - IT-2504 Individual (solo submission)
 
 ## 1. Topic and intended users
 
@@ -128,10 +124,6 @@ The test runner is intentionally dependency-free: it compares expected and actua
 
 ## 8. Build, run, and test instructions
 
-### Prerequisites
-
-- .NET 8 SDK (an 8.0.x SDK is recommended). Check it with `dotnet --version`.
-- No third-party NuGet packages are required.
 - Run the commands from the extracted project root, the directory containing `AidynYeskendirov_IFP4.sln` and `README.md`.
 
 ### Build
@@ -149,22 +141,6 @@ dotnet run --project src/CallPricing/CallPricing.csproj -- data/sample-calls.csv
 
 Expected key output: `Valid input records: 5`, `Rejected input rows: 3`, Standard `Total: 5.40`, Saver `Total: 4.64`. Exact row formatting may vary by terminal.
 
-### Run the empty dataset demonstration
-
-```bash
-dotnet run --project src/CallPricing/CallPricing.csproj -- data/empty-calls.csv
-```
-
-Expected result: no billable calls under either policy, with totals of `0.00` and a clear empty-data message.
-
-### Run the malformed-data demonstration
-
-```bash
-dotnet run --project src/CallPricing/CallPricing.csproj -- data/malformed-calls.csv
-```
-
-Expected result: valid rows are processed, invalid rows show their line number and rejection reason.
-
 ### Run automated tests
 
 ```bash
@@ -173,21 +149,9 @@ dotnet run --project tests/CallPricing.Tests/CallPricing.Tests.csproj
 
 Expected result: ten `PASS` lines followed by `Test result: 10 passed, 0 failed.` If any test fails, the runner exits with code 1.
 
-## 9. Defense walkthrough
 
-1. Run the normal input and point out that parsing/rejection happens before pricing.
-2. Trace `C-102`: the parser creates a `CallRecord`; Stage 1 retains its one-minute duration; Stage 2 calculates 0.15 under Standard and 0.13 under Saver; Stage 3 includes it in the ordered summary.
-3. Open `PriceCalls` and point to the `Func<CallRecord, decimal>` parameter and `ratePerMinutePolicy(call)` invocation.
-4. Explain that the pure stages only transform explicit inputs into new values. `Program.cs` owns the file read and console output.
-5. Run the empty input and automated test runner.
-6. Practice a small live change: change the Local Saver rate from `0.08m` to `0.09m` in `PricingPolicies.SaverRatePerMinute`, then update the expected Saver total assertion. This demonstrates that policy behavior is configurable without rewriting the pipeline.
+## 9. Conclusion
 
-## 10. Individual contribution
-
-- **Name:** Aidyn Yeskendirov
-- **Group:** Individual submission
 - **Implemented logic:** typed call record and quote models; CSV parsing and row rejection; the three pure pipeline stages; configurable Standard and Saver rate delegates; console workflow.
 - **Tests:** contributed the ten automated scenarios covering normal and empty workflows, the threshold boundary, invalid and missing inputs, policy comparison, delegate invocation, stage results, and input purity.
 - **Documentation:** documented domain assumptions, expected sample outputs, stage contracts, requirement mapping, commands, and defense notes in this README.
-
-The solution and tests are a runnable snapshot intended to be retained and extended in the next assignment. Before submitting, run the commands above from a clean extraction and verify the test output in the target .NET 8 environment.
